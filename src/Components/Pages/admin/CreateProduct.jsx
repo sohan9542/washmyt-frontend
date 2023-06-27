@@ -17,7 +17,7 @@ const CreateProduct = () => {
   const [model, setModel] = useState("");
   const [customize, setCustomize] = useState("");
   const [delivery, setDelivery] = useState("");
-
+const [loading, setLoading] = useState(false)
   const [subCategory, setSubCategory] = useState([
     {
       name: "",
@@ -34,6 +34,7 @@ const CreateProduct = () => {
     },
   ]);
   const create = () => {
+    setLoading(true)
     let data = JSON.stringify({
       name: name,
       price: price,
@@ -58,6 +59,7 @@ const CreateProduct = () => {
     axios
       .request(config)
       .then((response) => {
+        setLoading(false)
         if (response.data?.success) {
           toast.success("Product Created Successfully", {
             position: "top-right",
@@ -76,6 +78,7 @@ const CreateProduct = () => {
         }
       })
       .catch((error) => {
+        setLoading(false)
         toast.error("Something Went Wrong Please Try again", {
           position: "top-right",
           autoClose: 3000,
@@ -111,7 +114,7 @@ const CreateProduct = () => {
   return (
     <div className=" grid grid-cols-1  lg:grid-cols-5">
       <Sidebar />
-      <div className="w-full lg:col-span-4 mt-32 bg-white  lg:mt-0">
+      <div className="w-full relative lg:col-span-4 mt-32 pb-5 bg-white  lg:mt-0">
         <h1 className="text-center mt-32 text-2xl text-blk-tx font-bold">
           Create Product
         </h1>
@@ -380,6 +383,34 @@ const CreateProduct = () => {
             </div>
           </form>
         </div>
+      {loading &&  <div
+          className="fixed top-0 flex items-center justify-center left-0 w-full h-screen"
+          style={{ background: "rgba(255,255,255,0.5)" }}
+        >
+          <h1 className="text-3xl font-bold flex items-center gap-3">
+            <svg
+              class="animate-spin -ml-1 mr-3 h-10 w-10 text-black"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            Please Wait...
+          </h1>
+        </div>}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { HiOutlineMenu } from "react-icons/hi";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -13,11 +14,10 @@ const Sidebar = () => {
     <div className="lg:min-h-screen">
       <button
         type="button"
-        className="bg-white p-2 rounded-md text-gray-400 ml-6 lg:hidden"
+        className="bg-white p-2 rounded-md text-black ml-6 lg:hidden"
         onClick={() => setOpen(true)}
       >
-        <span>Open menu</span>
-        {/* <MenuIcon className="h-6 w-6" aria-hidden="true" /> */}
+        <HiOutlineMenu className="h-6 w-6" aria-hidden="true" />
       </button>
 
       <Transition.Root show={open} as={Fragment}>
@@ -50,9 +50,7 @@ const Sidebar = () => {
                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-lg font-medium text-gray-900">
-                            Shopping cart
-                          </Dialog.Title>
+                          <p></p>
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
@@ -75,12 +73,7 @@ const Sidebar = () => {
                           >
                             Cars
                           </Link>
-                          <Link
-                            className="hover:text-new pt-2 text-lg pb-2 font-medium"
-                            to="/admin/create"
-                          >
-                            Create Product
-                          </Link>
+
                           <Link
                             className="hover:text-new pt-2 text-lg pb-2  font-medium"
                             to="/admin/orders"
@@ -93,6 +86,15 @@ const Sidebar = () => {
                           >
                             Retailers
                           </Link>
+                          <p
+                            onClick={() => {
+                              localStorage.removeItem("Etoken");
+                              window.location.href = "/";
+                            }}
+                            className="hover:text-new cursor-pointer pt-2 text-lg pb-2  font-medium"
+                          >
+                            Log Out
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -122,6 +124,15 @@ const Sidebar = () => {
         >
           Retailers
         </Link>
+        <p
+          onClick={() => {
+            localStorage.removeItem("Etoken");
+            window.location.href = "/";
+          }}
+          className="hover:text-new cursor-pointer  pt-2  pb-2  font-medium"
+        >
+          Log Out
+        </p>
       </div>
     </div>
   );

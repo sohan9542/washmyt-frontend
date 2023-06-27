@@ -147,8 +147,13 @@ const AllProduct = () => {
                           <p>{item?.name}</p>
                         </td>
                         <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
-                          <div className=" flex items-center gap-2 pr-20">
+                          <div className=" hidden lg:flex items-center gap-2 pr-20">
                             {item?.images?.map((item) => (
+                              <img className="w-8" src={item?.url} alt="" />
+                            ))}
+                          </div>
+                          <div className=" flex lg:hidden items-center gap-2 pr-8 w-28">
+                            {item?.images?.slice(0,3)?.map((item) => (
                               <img className="w-8" src={item?.url} alt="" />
                             ))}
                           </div>
