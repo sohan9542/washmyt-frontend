@@ -146,12 +146,12 @@ const Retailer = () => {
 
                         <td className="px-4 py-2 text-gray-600 font-medium  whitespace-nowrap">
                           <div className=" flex items-center justify-center gap-2">
-                            {/* <Link
-                              to={"/admin/product/" + item?._id}
+                            <Link
+                              to={"/admin/retailer/" + item?.retailer?._id}
                               className=" px-2 hover:bg-red-600 hover:text-white py-1 border-2 border-red-600 text-red-600 rounded-md text-sm"
                             >
                               <BiEdit className=" w-5 h-5 cursor-pointer" />
-                            </Link> */}
+                            </Link>
                             <button
                               onClick={() => {
                                 deleteCupon(item?.retailer?._id);

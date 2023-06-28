@@ -6,6 +6,7 @@ import CreateProduct from "../admin/CreateProduct";
 import Retailer from "../admin/Retailer";
 import AddRetailer from "../admin/AddRetailer";
 import AllOrder from "../admin/AllOrder";
+import RetailerUpdate from "../admin/RetailerUpdate";
 
 const ProtectedRoute = ({ go }) => {
   const { isAuthenticated, loading } = useContext(RapperContent);
@@ -24,6 +25,9 @@ const ProtectedRoute = ({ go }) => {
     }
     else if(go === "/admin/orders"){
       return <AllOrder/>
+    }
+    else if(go === "/admin/retailer/:id"){
+      return <RetailerUpdate/>
     }
   };
   return (

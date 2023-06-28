@@ -9,6 +9,7 @@ import Topbar from "./layout/Topbar";
 import Login from "./page/Login";
 import RetailerDetails from "./page/RetailerDetails";
 import RetailerCategory from "./page/RetailerCategory";
+import Footer from "./layout/Footer";
 
 export const RapperContent = createContext();
 export const URI = process.env.REACT_APP_API_URI;
@@ -75,8 +76,13 @@ const App = () => {
               path="/admin/orders"
               element={<ProtectedRoute go="/admin/orders" />}
             />
+            <Route
+              path="/admin/retailer/:id"
+              element={<ProtectedRoute go="/admin/retailer/:id" />}
+            />
          
           </Routes>
+          <Footer/>
         </div>
       </BrowserRouter>
     </RapperContent.Provider>

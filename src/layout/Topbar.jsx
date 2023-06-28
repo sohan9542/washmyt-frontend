@@ -14,7 +14,7 @@ function classNames(...classes) {
 const Topbar = () => {
 const {isAuthenticated }= useContext(RapperContent)
   return (
-    <div className=" pr-3 flex items-center justify-between py-4 bg-gray-50">
+    <div className=" px-5 flex items-center justify-between py-4 bg-gray-50">
       <Link to="/">
         <img className="h-12 w-40" src="/logo.png" alt="" />
       </Link>

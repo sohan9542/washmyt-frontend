@@ -26,7 +26,7 @@ const RetailerCategory = () => {
   }, []);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 min-h-[900px]">
       <div className=" max-w-[1500px] mx-auto">
         <h1 className=" text-4xl font-bold">
           {retailers?.retailer?.dealerName}
@@ -53,7 +53,7 @@ const RetailerCategory = () => {
                     </h1>
 
                     <button className="px-3 py-3 border  mt-5 w-full text-cener font-bold rounded-md gap-2 text-pr hover:bg-pr hover:text-white  border-pr ">
-                      More Details
+                     Order Now
                     </button>
                   </Link>
                 ))}

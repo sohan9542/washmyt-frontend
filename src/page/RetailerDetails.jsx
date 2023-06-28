@@ -65,8 +65,8 @@ const RetailerDetails = () => {
   return (
     <div className=" mt-5">
       <div className=" max-w-[1500px] mx-auto">
-        <div className=" grid grid-cols-1 gap-5 lg:grid-cols-5">
-          <div className=" lg:col-span-3 h-[1000px] bg-white ">
+        <div className=" grid grid-cols-1 items-start gap-5 lg:grid-cols-5">
+          <div className=" lg:col-span-3 mt-32   ">
             <Swiper
               navigation={true}
               modules={[Navigation]}
@@ -79,7 +79,7 @@ const RetailerDetails = () => {
               ))}
             </Swiper>
           </div>
-          <div className=" lg:col-span-2 min-h-[1000px]  p-16 bg-white w-full">
+          <div className=" lg:col-span-2 min-h-[900px] p-3  lg:p-16 bg-white w-full">
             <h1 className=" text-4xl font-bold">
               Reserve your{" "}
               <span className=" uppercase">{productInfo?.model}</span>

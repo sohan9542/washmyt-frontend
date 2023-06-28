@@ -4,9 +4,10 @@ import { useState } from "react";
 import axios from "axios";
 import { URI } from "../../../App";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-const AddRetailer = () => {
+const RetailerUpdate = () => {
+  const { id } = useParams();
   const [name, setName] = useState("");
   const history = useNavigate();
   const [allProducts, setAllProducts] = useState([]);
@@ -29,8 +30,8 @@ const AddRetailer = () => {
     });
 
     let config = {
-      method: "post",
-      url: `${URI}/api/v1/admin/retailer/new`,
+      method: "put",
+      url: `${URI}/api/v1/admin/retailer/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("Etoken")}`,
@@ -42,7 +43,7 @@ const AddRetailer = () => {
       .request(config)
       .then((response) => {
         if (response.data?.success) {
-          toast.success("Retailer Created Successfully", {
+          toast.success("Retailer Updated Successfully", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -90,6 +91,36 @@ const AddRetailer = () => {
       });
   }, []);
 
+  React.useEffect(() => {
+    if (allProducts.length !== 0) {
+      var config = {
+        method: "get",
+        url: `${URI}/api/v1/retailer/${id}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("Etoken")}`,
+        },
+      };
+      axios(config)
+        .then(function (response) {
+          let data = response.data?.retailer;
+          setName(data?.dealerName);
+          setStreet(data?.street);
+          setAddress(data?.address);
+
+          data?.car?.map((item) => {
+            addSelectedCar(item);
+          });
+
+          setMake([...data?.make]);
+          setModel([...data?.model]);
+          setZipCode(data?.zip);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }, [allProducts]);
+
   const [selectedCars, setSelectedCars] = useState([]);
   React.useEffect(() => {}, [carId]);
 
@@ -107,10 +138,17 @@ const AddRetailer = () => {
   }, [selectedCars]);
 
   const addSelectedCar = (item) => {
-    setCarId([...carId, item])
+    setCarId([...carId, item]);
     let demoCar = allProducts.find((e) => e._id === item);
     setSelectedCars([...selectedCars, demoCar]);
-    let removedList = allProductCopy.filter((i) => i._id !== item);
+    let removedList;
+    if (allProductCopy.length !== 0) {
+      removedList = allProductCopy.filter((i) => i._id !== item);
+    }
+    else{
+      removedList = allProducts.filter((i) => i._id !== item);
+    }
+    // console.log("removedList", removedList)
     setAllProductCopy([...removedList]);
   };
 
@@ -128,8 +166,8 @@ const AddRetailer = () => {
     setModel([...dModel]);
     setSelectedCars([...removedCarList]);
 
-    let dcarId = carId.filter((item)=> item !== selected?._id)
-    setCarId([...dcarId])
+    let dcarId = carId.filter((item) => item !== selected?._id);
+    setCarId([...dcarId]);
 
     let removedList = allProducts.filter((item) => item?._id === selected?._id);
     setAllProductCopy([...allProductCopy, removedList[0]]);
@@ -140,7 +178,7 @@ const AddRetailer = () => {
       <Sidebar />
       <div className="w-full lg:col-span-4 bg-white mt-32 lg:mt-0">
         <h1 className="text-center mt-32 text-2xl text-blk-tx font-bold">
-          Create Retailer
+          Update Retailer
         </h1>
         <div className="flex w-full items-center justify-center">
           <form
@@ -200,8 +238,7 @@ const AddRetailer = () => {
               required={selectedCars.length > 0 ? false : true}
               value={carId}
               onChange={(e) => {
-            
-                addSelectedCar( e.target.value);
+                addSelectedCar(e.target.value);
                 // console.log(product)
               }}
               name=""
@@ -228,4 +265,4 @@ const AddRetailer = () => {
   );
 };
 
-export default AddRetailer;
+export default RetailerUpdate;

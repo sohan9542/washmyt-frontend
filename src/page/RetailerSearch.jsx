@@ -4,6 +4,9 @@ import { BiSearch } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { URI } from "../App";
 import { toast } from "react-toastify";
+import { useLoadScript } from '@react-google-maps/api';
+
+const libraries = ['places'];
 const RetailerSearch = () => {
   const [zipCode, setZipCode] = useState("");
   const [make, setMake] = useState("");
@@ -114,8 +117,47 @@ const RetailerSearch = () => {
     }
   }, [makedata, modeldata]);
 
+
+
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    libraries,
+  });
+
+
+  const autocompleteRef = useRef(null);
+
+  useEffect(() => {
+    if (isLoaded && !loadError) {
+      const autocomplete = new window.google.maps.places.Autocomplete(
+        autocompleteRef.current,
+        { types: ['(regions)'], componentRestrictions: { country: 'us' } }
+      );
+
+      autocomplete.setFields(['address_components']);
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (place && place.address_components) {
+          const postalCodeComponent = place.address_components.find(
+            component => component.types.includes('postal_code')
+          );
+          const postalCode = postalCodeComponent ? postalCodeComponent.long_name : '';
+
+          setZipCode(postalCode);
+        }
+      });
+    }
+  }, [isLoaded, loadError]);
+
+  const handleZipCodeInputChange = (e) => {
+    setZipCode(e.target.value);
+
+  };
+
+
   return (
-    <div className=" mt-5 px-3 lg:px-0">
+    <div className=" mt-5 px-3 lg:px-0 min-h-[900px]">
       <div className=" max-w-[1500px] mx-auto">
         <h1 className="text-3xl pb-6 font-medium text-gray-600 ">Get started by searching Retailer</h1>
         <form
@@ -123,19 +165,22 @@ const RetailerSearch = () => {
             e.preventDefault();
             search();
           }}
-          className=" grid grid-cols-1 lg:grid-cols-7 gap-2 lg:gap-5"
+          className=" grid grid-cols-1 lg:grid-cols-10 gap-2 lg:gap-5"
         >
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <p className="text-gray-500 text-sm">Zip Code</p>
             <input
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
+         ref={autocompleteRef}
+         id="zip_code_input"
+         value={zipCode}
+         onChange={handleZipCodeInputChange}
               type="text"
               placeholder="Ex: 33907"
               className="w-full border px-3 py-3 mt-2 bg-transparent outline-none focus:border focus:border-pr"
             />
+            
           </div>
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <p className="text-gray-500 text-sm">Make</p>
             <select
               value={make}
@@ -150,7 +195,7 @@ const RetailerSearch = () => {
               ))}
             </select>
           </div>
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <p className="text-gray-500 text-sm">Model</p>
             <select
               value={model}
@@ -168,7 +213,7 @@ const RetailerSearch = () => {
           <div className="flex items-center mt-7 gap-2">
             <button
               type="submit"
-              className="px-3 py-3 border flex items-center gap-2 text-pr hover:bg-pr hover:text-white  border-pr "
+              className="px-3 py-3 border flex w-full justify-center items-center gap-2 text-pr hover:bg-pr hover:text-white  border-pr "
             >
               <BiSearch className="w-5  h-5  " /> Search
             </button>
@@ -186,7 +231,7 @@ const RetailerSearch = () => {
                       className="bg-white shadow-md hover:text-pr p-5 rounded-md"
                     >
                 
-                      <p className="text-gray-500 ">Linked Car : <span className="font-bold">{item?.car?.length}</span></p>
+                    
                       <h1 className="text-xl pt-2 font-bold text-gray-700">
                         {item?.dealerName}
                       </h1>
