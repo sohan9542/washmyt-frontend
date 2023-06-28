@@ -100,7 +100,7 @@ const Login = () => {
   // };
   return (
     <div className="  flex min-h-[900px] items-center justify-center">
-       <div className=" bg-white mt-40 p-10 mx-auto">
+       <div className=" bg-white  p-10 mx-auto">
           <h1 className="text-center text-2xl text-blk-tx font-bold">Login</h1>
           <div className="flex w-full items-center justify-center">
             <form
