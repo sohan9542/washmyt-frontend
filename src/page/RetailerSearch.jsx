@@ -25,13 +25,32 @@ const RetailerSearch = () => {
     axios(config)
       .then(function (response) {
         setMakecategory(response.data?.make);
+        // setAllProducts(response.data?.retailer);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+   
+  }, []);
+
+  useEffect(() => {
+    var config = {
+      method: "get",
+      url: `${URI}/api/v1/category/model?make=${make}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("Etoken")}`,
+      },
+    };
+    axios(config)
+      .then(function (response) {
         setModelcategory(response.data?.model);
         // setAllProducts(response.data?.retailer);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [make])
+  
 
   const [retailers, setRetailers] = useState(null);
   const search = () => {
@@ -158,14 +177,14 @@ const RetailerSearch = () => {
 
   return (
     <div className=" mt-5 px-3 lg:px-0 min-h-[900px]">
-      <div className=" max-w-[1500px] mx-auto">
-        <h1 className="text-3xl pb-6 font-medium text-gray-600 ">Get started by searching Retailer</h1>
+      <div className="px-7  mx-auto">
+        <h1 className="text-3xl pb-6 font-medium text-gray-600 ">Search, Research & Order Your Next Car</h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             search();
           }}
-          className=" grid grid-cols-1 lg:grid-cols-10 gap-2 lg:gap-5"
+          className={` grid grid-cols-1 ${modelcategory.length !== 0 ? "lg:grid-cols-10": "lg:grid-cols-7"} gap-2 lg:gap-5`}
         >
           <div className="lg:col-span-3">
             <p className="text-gray-500 text-sm">Zip Code</p>
@@ -195,7 +214,7 @@ const RetailerSearch = () => {
               ))}
             </select>
           </div>
-          <div className="lg:col-span-3">
+         {modelcategory.length > 0 && <div className="lg:col-span-3">
             <p className="text-gray-500 text-sm">Model</p>
             <select
               value={model}
@@ -209,7 +228,7 @@ const RetailerSearch = () => {
                 <option key={ind} value={item}>{item}</option>
               ))}
             </select>
-          </div>
+          </div>}
           <div className="flex items-center mt-7 gap-2">
             <button
               type="submit"
