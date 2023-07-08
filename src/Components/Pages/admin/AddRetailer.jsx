@@ -17,6 +17,7 @@ const AddRetailer = () => {
   const [make, setMake] = useState([]);
   const [model, setModel] = useState([]);
   const [zipCode, setZipCode] = useState("");
+  const [testDrive, setTestDrive] = useState(false)
   const create = () => {
     let data = JSON.stringify({
       dealerName: name,
@@ -26,6 +27,7 @@ const AddRetailer = () => {
       make: make,
       model: model,
       zip: zipCode,
+      testDrive: testDrive,
     });
 
     let config = {
@@ -107,7 +109,7 @@ const AddRetailer = () => {
   }, [selectedCars]);
 
   const addSelectedCar = (item) => {
-    setCarId([...carId, item])
+    setCarId([...carId, item]);
     let demoCar = allProducts.find((e) => e._id === item);
     setSelectedCars([...selectedCars, demoCar]);
     let removedList = allProductCopy.filter((i) => i._id !== item);
@@ -128,8 +130,8 @@ const AddRetailer = () => {
     setModel([...dModel]);
     setSelectedCars([...removedCarList]);
 
-    let dcarId = carId.filter((item)=> item !== selected?._id)
-    setCarId([...dcarId])
+    let dcarId = carId.filter((item) => item !== selected?._id);
+    setCarId([...dcarId]);
 
     let removedList = allProducts.filter((item) => item?._id === selected?._id);
     setAllProductCopy([...allProductCopy, removedList[0]]);
@@ -200,8 +202,7 @@ const AddRetailer = () => {
               required={selectedCars.length > 0 ? false : true}
               value={carId}
               onChange={(e) => {
-            
-                addSelectedCar( e.target.value);
+                addSelectedCar(e.target.value);
                 // console.log(product)
               }}
               name=""
@@ -215,6 +216,13 @@ const AddRetailer = () => {
                 </option>
               ))}
             </select>
+
+            <p className=" mt-3"> Chance for Test Drive</p>
+            <label class="relative inline-flex mt-2 items-center cursor-pointer">
+              <input  onChange={(e)=>setTestDrive(e.target.checked)}  type="checkbox"  class="sr-only peer" />
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <span class="ml-3  font-medium text-gray-900">{testDrive ? "Yes": "No"}</span>
+            </label>
 
             <div className="w-full flex items-center justify-center mt-7">
               <button className="inline-block text-center transition delay-100 ease-linear bg-pr border border-transparent rounded-md py-2 px-8 font-medium text-white ">

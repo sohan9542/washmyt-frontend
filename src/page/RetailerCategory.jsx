@@ -55,6 +55,7 @@ const RetailerCategory = () => {
                     <button className="px-3 py-3 border  mt-5 w-full text-cener font-bold rounded-md gap-2 text-pr hover:bg-pr hover:text-white  border-pr ">
                      Order Now
                     </button>
+              
                   </Link>
                 ))}
               </>

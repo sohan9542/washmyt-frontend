@@ -80,6 +80,22 @@ const App = () => {
               path="/admin/retailer/:id"
               element={<ProtectedRoute go="/admin/retailer/:id" />}
             />
+            <Route
+              path="/admin/product/:id"
+              element={<ProtectedRoute go="/admin/product/:id" />}
+            />
+            <Route
+              path="/admin/admins"
+              element={<ProtectedRoute go="/admin/admins" />}
+            />
+            <Route
+              path="/admin/admin/create"
+              element={<ProtectedRoute go="/admin/admin/create" />}
+            />
+            <Route
+              path="/admin/testdrive"
+              element={<ProtectedRoute go="/admin/testdrive" />}
+            />
          
           </Routes>
           <Footer/>

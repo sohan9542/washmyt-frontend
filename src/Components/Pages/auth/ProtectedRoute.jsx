@@ -7,6 +7,10 @@ import Retailer from "../admin/Retailer";
 import AddRetailer from "../admin/AddRetailer";
 import AllOrder from "../admin/AllOrder";
 import RetailerUpdate from "../admin/RetailerUpdate";
+import EditProduct from "../admin/EditProduct";
+import Admins from "../admin/Admin";
+import AddAdmin from "../admin/AddAdmin";
+import AllTestDrive from "../admin/TestDrive";
 
 const ProtectedRoute = ({ go }) => {
   const { isAuthenticated, loading } = useContext(RapperContent);
@@ -28,6 +32,18 @@ const ProtectedRoute = ({ go }) => {
     }
     else if(go === "/admin/retailer/:id"){
       return <RetailerUpdate/>
+    }
+    else if(go === "/admin/product/:id"){
+      return <EditProduct/>
+    }
+    else if(go === "/admin/admins"){
+      return <Admins/>
+    }
+    else if(go === "/admin/admin/create"){
+      return <AddAdmin/>
+    }
+    else if(go === "/admin/testdrive"){
+      return <AllTestDrive/>
     }
   };
   return (

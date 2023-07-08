@@ -86,6 +86,18 @@ const Sidebar = () => {
                           >
                             Retailers
                           </Link>
+                          <Link
+                            className="hover:text-new pt-2 text-lg pb-2  font-medium"
+                            to="/admin/testdrive"
+                          >
+                            Test Drive Requests
+                          </Link>
+                          <Link
+                            className="hover:text-new pt-2 text-lg pb-2  font-medium"
+                            to="/admin/admin"
+                          >
+                            Admins
+                          </Link>
                           <p
                             onClick={() => {
                               localStorage.removeItem("Etoken");
@@ -124,6 +136,19 @@ const Sidebar = () => {
         >
           Retailers
         </Link>
+        <Link
+          className="hover:text-new pt-2 text-lg pb-2  font-medium"
+          to="/admin/testdrive"
+        >
+          Test Drive Requests
+        </Link>
+        <Link
+          className="hover:text-new pt-2 text-lg pb-2  font-medium"
+          to="/admin/admins"
+        >
+          Admins
+        </Link>
+   
         <p
           onClick={() => {
             localStorage.removeItem("Etoken");

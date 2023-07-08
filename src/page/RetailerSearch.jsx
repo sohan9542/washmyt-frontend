@@ -210,7 +210,7 @@ const RetailerSearch = () => {
             >
               <option value=""></option>
               {makecategory.map((item, ind) => (
-                <option key={ind} value={item}>{item}</option>
+                <option key={ind} value={item} className=" capitalize">{item}</option>
               ))}
             </select>
           </div>
@@ -225,7 +225,7 @@ const RetailerSearch = () => {
             >
               <option value=""></option>
               {modelcategory.map((item, ind) => (
-                <option key={ind} value={item}>{item}</option>
+                <option key={ind} value={item} className=" capitalize">{item}</option>
               ))}
             </select>
           </div>}

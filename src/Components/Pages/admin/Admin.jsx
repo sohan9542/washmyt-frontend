@@ -9,21 +9,21 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 // import { toast } from "react-toastify";
-const Retailer = () => {
+const Admins = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [reload, setReload] = useState(false);
 
   React.useEffect(() => {
     var config = {
       method: "get",
-      url: `${URI}/api/v1/admin/retailer`,
+      url: `${URI}/api/v1/admin/users`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("Etoken")}`,
       },
     };
     axios(config)
       .then(function (response) {
-        setAllProducts(response.data?.retailer);
+        setAllProducts(response.data?.users);
       })
       .catch(function (error) {
         console.log(error);
@@ -37,7 +37,7 @@ const Retailer = () => {
   const deleteCupon = (id) => {
     var config = {
       method: "delete",
-      url: `${URI}/api/v1/admin/retailer/${id}`,
+      url: `${URI}/api/v1/admin/user/${id}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("Etoken")}`,
       },
@@ -78,13 +78,13 @@ const Retailer = () => {
         <div className=" mt-3 py-3 px-5 rounded-xl lg:col-span-4 bg-white shadow-sm">
           <div className="flex items-center justify-between  my-5">
             <h2 className=" font-semibold text-3xl text-gray-700 text-center ">
-              All Retailers
+             Admins
             </h2>
             <Link
               className="px-3 py-2 border  mt-5  text-cener font-bold rounded-md gap-2 text-pr hover:bg-pr hover:text-white  border-pr "
-              to="/admin/retailer/create"
+              to="/admin/admin/create"
             >
-              Add Retailer
+              Add Admin
             </Link>
           </div>
           <div>
@@ -96,33 +96,16 @@ const Retailer = () => {
                       scope="col"
                       className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
                     >
-                      Retailer Name
+                      Name
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
                     >
-                      Street
+                      Email
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
-                    >
-                      Address
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
-                    >
-                      Linked Cars
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
-                    >
-                     Test Drive
-                    </th>
-
+            
+          
                     <th
                       scope="col"
                       className="px-6 py-2 text-xs font-bold text-gray-500  tracking-wider"
@@ -136,33 +119,16 @@ const Retailer = () => {
                     {allProducts?.map((item, ind) => (
                       <tr>
                         <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
-                          <p>{item?.retailer?.dealerName}</p>
+                          <p>{item?.name}</p>
                         </td>
                         <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
-                          <p>{item?.retailer?.street}</p>
-                        </td>
-                        <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
-                          <p>{item?.retailer?.address}</p>
-                        </td>
-                        <td className="px-4 py-2 text-gray-600 flex items-center gap-1 flex-wrap font-medium ">
-                          {item?.retailer?.make?.map((i) => (
-                            <p>{i},</p>
-                          ))}
-                        </td>
-                        <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
-                          <p>{item?.retailer?.testDrive ? "Yes": "No"}</p>
+                          <p>{item?.email}</p>
                         </td>
                         <td className="px-4 py-2 text-gray-600 font-medium  whitespace-nowrap">
                           <div className=" flex items-center justify-center gap-2">
-                            <Link
-                              to={"/admin/retailer/" + item?.retailer?._id}
-                              className=" px-2 hover:bg-red-600 hover:text-white py-1 border-2 border-red-600 text-red-600 rounded-md text-sm"
-                            >
-                              <BiEdit className=" w-5 h-5 cursor-pointer" />
-                            </Link>
                             <button
                               onClick={() => {
-                                deleteCupon(item?.retailer?._id);
+                                deleteCupon(item?._id);
                               }}
                               className=" px-2 hover:bg-red-600 hover:text-white py-1 border-2 border-red-600 text-red-600 rounded-md text-sm"
                             >
@@ -183,4 +149,4 @@ const Retailer = () => {
   );
 };
 
-export default Retailer;
+export default Admins;

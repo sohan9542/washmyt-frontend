@@ -27,7 +27,6 @@ import { Link } from "react-router-dom";
 import { Country, State } from "country-state-city";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const RetailerDetails = () => {
   const { id, pid } = useParams();
@@ -35,6 +34,70 @@ const RetailerDetails = () => {
 
   const [retailerInfo, setRetailerInfo] = useState(null);
   const [productInfo, setProductInfo] = useState(null);
+  const cancelButtonRef = useRef(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [timeNeeded, setTimeNeeded] = useState(false);
+  const [dateSelect, setDateSelect] = useState("");
+  const [timeSelect, setTimeSelect] = useState("");
+
+  const testDriveRrq = async () => {
+    let data = JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      phone,
+      zipCode,
+      dateSelect,
+      timeSelect,
+      retailerId: retailerInfo?._id,
+      productId: productInfo?._id
+
+    });
+
+    let config = {
+      method: "post",
+      url: `${URI}/api/v1/testdrive`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        if (response.data?.success) {
+          toast.success("Test Drive Request Successfull", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+
+          setOpen(false);
+        }
+      })
+      .catch((error) => {
+        toast.error("Something Went Wrong Please Try again", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
   useEffect(() => {
     if (id) {
       var config = {
@@ -71,10 +134,26 @@ const RetailerDetails = () => {
 
   const [accept, setAccept] = useState(false);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
 
   return (
     <div className=" mt-5">
       <PrivacyModal open={open} setOpen={setOpen} />
+      <TestDrive
+        open={open2}
+        setOpen={setOpen2}
+        cancelButtonRef={cancelButtonRef}
+        setFirstName={setFirstName}
+        setLastName={setLastName}
+        setEmail={setEmail}
+        setPhone={setPhone}
+        setZipCode={setZipCode}
+        timeNeeded={timeNeeded}
+        setTimeNeeded={setTimeNeeded}
+        setDateSelect={setDateSelect}
+        setTimeSelect={setTimeSelect}
+        testDriveRrq={testDriveRrq}
+      />
       <div className=" max-w-[1500px] mx-auto">
         <div className=" grid grid-cols-1 items-start gap-5 lg:grid-cols-5">
           <div className=" lg:col-span-3 mt-32   ">
@@ -92,8 +171,7 @@ const RetailerDetails = () => {
           </div>
           <div className=" lg:col-span-2 min-h-[900px] p-3  lg:p-16 bg-white w-full">
             <h1 className=" text-4xl font-bold">
-              Reserve your{" "}
-              <span className=" uppercase">{productInfo?.model}</span>
+              Reserve your <span>{productInfo?.name}</span>
             </h1>
             {confirmPayment === 1 && (
               <>
@@ -217,6 +295,14 @@ const RetailerDetails = () => {
                   >
                     CONTINUE TO PAYMENT
                   </button>
+                  {retailerInfo?.testDrive && (
+                    <div
+                      onClick={() => setOpen2(true)}
+                      className="px-3 text-center cursor-pointer py-3 border  mt-2 uppercase w-full text-cener font-bold rounded-md gap-2 text-pr hover:bg-black hover:text-white  border-pr "
+                    >
+                      Request A Test Drive
+                    </div>
+                  )}
                 </form>
               </>
             )}
@@ -957,7 +1043,186 @@ function PrivacyModal({ open, setOpen }) {
                     </div>
                   </div>
                 </div>
-         
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  );
+}
+
+function TestDrive({
+  open,
+  setOpen,
+  cancelButtonRef,
+  setFirstName,
+  setLastName,
+  setEmail,
+  setPhone,
+  setZipCode,
+  timeNeeded,
+  setTimeNeeded,
+  setDateSelect,
+  setTimeSelect,
+  testDriveRrq
+}) {
+  return (
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        initialFocus={cancelButtonRef}
+        onClose={setOpen}
+      >
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all my-8 w-full lg:max-w-3xl">
+                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div>
+                    <div className="mt-3 ml-4 ">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-3xl font-bold leading-6 text-gray-900"
+                      >
+                        TEST DRIVE
+                      </Dialog.Title>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          testDriveRrq();
+                        }}
+                        className="mt-8 w-full"
+                      >
+                        <input
+                          type="text"
+                          onChange={(e) => setFirstName(e.target.value)}
+                          className="w-full border p-3 outline-none  rounded-md"
+                          required
+                          placeholder="First Name *"
+                        />
+                        <input
+                          type="text"
+                          onChange={(e) => setLastName(e.target.value)}
+                          className="w-full border p-3 mt-3 outline-none  rounded-md"
+                          required
+                          placeholder="Last Name *"
+                        />
+
+                        <input
+                          type="text"
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="w-full border p-3 mt-3 outline-none  rounded-md"
+                          required
+                          placeholder="Email Address*"
+                        />
+                        <input
+                          type="text"
+                          onChange={(e) => setPhone(e.target.value)}
+                          className="w-full border p-3 mt-3 outline-none  rounded-md"
+                          required
+                          placeholder="Phone Number*"
+                        />
+                        <input
+                          type="text"
+                          onChange={(e) => setZipCode(e.target.value)}
+                          className="w-full border p-3 mt-3 outline-none  rounded-md"
+                          required
+                          placeholder="Zip Code*"
+                        />
+
+                        <legend className="text-sm font-semibold leading-6 text-gray-900">
+                          Select a preferred time and date?
+                        </legend>
+
+                        <label class="relative inline-flex mt-2 items-center cursor-pointer">
+                          <input
+                            checked={timeNeeded}
+                            onChange={(e) => setTimeNeeded(e.target.checked)}
+                            type="checkbox"
+                            class="sr-only peer"
+                          />
+                          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                          <span class="ml-3  font-medium text-gray-900">
+                            {timeNeeded ? "Yes" : "No"}
+                          </span>
+                        </label>
+
+                        {timeNeeded && (
+                          <div
+                            className="grid
+                         grid-cols-1 lg:grid-cols-2 gap-4"
+                          >
+                            <input
+                              onChange={(e) => setDateSelect(e.target.value)}
+                              type="date"
+                              className="w-full border p-3 mt-3 outline-none  rounded-md"
+                              required
+                            />
+                            <select
+                              onChange={(e) => setTimeSelect(e.target.value)}
+                              required
+                              className="w-full border p-3 mt-3 outline-none  rounded-md"
+                              name=""
+                              id=""
+                            >
+                              <option value="">Select time</option>
+                              <option value="Anytime">Anytime</option>
+                              <option value="Morning">Morning</option>
+                              <option value="Afternoon">Afternoon</option>
+                              <option value="Evening">Evening</option>
+                            </select>
+                          </div>
+                        )}
+
+                        <button
+                          type="submit"
+                          className="px-3 mt-4 text-center cursor-pointer py-3 border  uppercase w-full text-cener font-bold rounded-md gap-2 text-pr hover:bg-black hover:text-white  border-pr "
+                        >
+                          Request A Test Drive
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    onClick={() => setOpen(false)}
+                  >
+                    Deactivate
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    onClick={() => setOpen(false)}
+                    ref={cancelButtonRef}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
