@@ -171,7 +171,7 @@ const RetailerDetails = () => {
           </div>
           <div className=" lg:col-span-2 min-h-[900px] p-3  lg:p-16 bg-white w-full">
             <h1 className=" text-4xl font-bold">
-              Reserve your <span>{productInfo?.name}</span>
+            Order your <span>{productInfo?.name}</span>
             </h1>
             {confirmPayment === 1 && (
               <>
@@ -291,14 +291,14 @@ const RetailerDetails = () => {
                   </div>
                   <button
                     type="submit"
-                    className="bg-pr w-full py-4 font-semibold text-white cursor-pointer hover:bg-black mt-10 rounded-md text-center"
+                    className="w-full py-4 font-semibold text-white cursor-pointer bg-black mt-10 rounded-md text-center"
                   >
                     CONTINUE TO PAYMENT
                   </button>
                   {retailerInfo?.testDrive && (
                     <div
                       onClick={() => setOpen2(true)}
-                      className="px-3 text-center cursor-pointer py-3 border  mt-2 uppercase w-full text-cener font-bold rounded-md gap-2 text-pr hover:bg-black hover:text-white  border-pr "
+                      className="px-3 text-center cursor-pointer py-3 border  mt-2 uppercase w-full text-cener font-bold rounded-md gap-2 text-black hover:bg-black hover:text-white  border-black "
                     >
                       Request A Test Drive
                     </div>
@@ -1206,23 +1206,7 @@ function TestDrive({
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
-                  >
-                    Deactivate
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setOpen(false)}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
-                </div>
+           
               </Dialog.Panel>
             </Transition.Child>
           </div>

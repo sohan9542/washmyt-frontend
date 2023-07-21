@@ -79,10 +79,6 @@ const AllTestDrive = () => {
         console.log(error);
       });
   };
-  const [showDetails, setShowDetails] = useState(false);
-  const [orderSelected, setOrderSelected] = useState(null);
-
-
 
   return (
     <div>
@@ -121,6 +117,18 @@ const AllTestDrive = () => {
                         className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
                       >
                         Phone
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
+                      >
+                        Request Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
+                      >
+                        Request Time
                       </th>
 
                       <th
@@ -171,6 +179,12 @@ const AllTestDrive = () => {
                           </td>
                           <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
                             <p>{item?.userData?.phone}</p>
+                          </td>
+                          <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
+                            <p>{item?.userData?.dateSelect?.slice(0,10)}</p>
+                          </td>
+                          <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
+                            <p>{item?.userData?.timeSelect}</p>
                           </td>
 
                           <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">

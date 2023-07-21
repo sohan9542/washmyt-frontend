@@ -27,7 +27,7 @@ const RetailerCategory = () => {
 
   return (
     <div className="mt-5 min-h-[900px]">
-      <div className=" max-w-[1500px] mx-auto">
+      <div className=" max-w-[1500px] px-10 mx-auto">
         <h1 className=" text-4xl font-bold">
           {retailers?.retailer?.dealerName}
         </h1>
