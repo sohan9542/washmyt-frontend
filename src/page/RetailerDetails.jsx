@@ -1198,7 +1198,7 @@ function TestDrive({
 
                         <button
                           type="submit"
-                          className="px-3 mt-4 text-center cursor-pointer py-3 border  uppercase w-full text-cener font-bold rounded-md gap-2 text-pr hover:bg-black hover:text-white  border-pr "
+                          className="px-3 mt-4 text-center cursor-pointer py-3 border  uppercase w-full text-cener font-bold rounded-md gap-2 text-[#0094ff]  border-[#0094ff] "
                         >
                           Request A Test Drive
                         </button>
