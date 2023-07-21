@@ -178,7 +178,7 @@ const RetailerSearch = () => {
       {!load ? (
         <div className="px-7  mx-auto">
           <h1 className="text-3xl pb-6 font-medium text-gray-600 ">
-            Search, Research & Order Your Next Car
+          Simplifying Your Journey to New Wheels
           </h1>
           <form
             onSubmit={(e) => {

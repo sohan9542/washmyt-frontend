@@ -452,7 +452,7 @@ const RetailerDetails = () => {
                     type="submit"
                     className="flex w-full cursor-pointer mt-3 justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-black"
                   >
-                    Next
+                    CONTINUE
                   </button>
                 </form>
               </>
@@ -650,7 +650,7 @@ const PaymentElement = ({
 
       <input
         type="submit"
-        value={`Place Order`}
+        value={`PLACE ORDER`}
         ref={payBtn}
         className="flex w-full cursor-pointer mt-3 justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-black"
       />
@@ -1106,7 +1106,7 @@ function TestDrive({
                         as="h3"
                         className="text-3xl font-bold leading-6 text-gray-900"
                       >
-                        TEST DRIVE
+                        Schedule a Test Drive
                       </Dialog.Title>
                       <form
                         onSubmit={(e) => {
