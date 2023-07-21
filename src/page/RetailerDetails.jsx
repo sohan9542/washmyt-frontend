@@ -261,7 +261,7 @@ const RetailerDetails = () => {
                 </div>
                 <h1 className="mt-9 font-bold text-xl">Pricing</h1>
                 <div className="mt-3 flex items-center justify-between">
-                  <p>Refundable deposit</p>
+                  <p>Refundable deposit (due today)</p>
                   <p className="font-bold">${productInfo?.price}</p>
                 </div>
                 <form
@@ -291,14 +291,14 @@ const RetailerDetails = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-full py-4 font-semibold text-white cursor-pointer bg-black mt-10 rounded-md text-center"
+                    className="w-full uppercase py-4 font-semibold text-white cursor-pointer bg-black mt-10 rounded-md text-center"
                   >
-                    CONTINUE TO PAYMENT
+                    Order with Card
                   </button>
                   {retailerInfo?.testDrive && (
                     <div
                       onClick={() => setOpen2(true)}
-                      className="px-3 text-center cursor-pointer py-3 border  mt-2 uppercase w-full text-cener font-bold rounded-md gap-2 text-black hover:bg-black hover:text-white  border-black "
+                      className="px-3 text-center cursor-pointer py-3 border  mt-2 uppercase w-full text-cener font-bold rounded-md gap-2 text-[#0094ff]  border-[#0094ff] "
                     >
                       Request A Test Drive
                     </div>
@@ -309,7 +309,7 @@ const RetailerDetails = () => {
             {confirmPayment === 2 && (
               <>
                 <div className="mt-3 flex items-center justify-between">
-                  <p>Refundable deposit</p>
+                  <p>Refundable deposit (due today)</p>
                   <p className="font-bold">${productInfo?.price}</p>
                 </div>
 
@@ -460,7 +460,7 @@ const RetailerDetails = () => {
             {confirmPayment === 3 && (
               <>
                 <div className="mt-3 flex items-center justify-between">
-                  <p>Refundable deposit</p>
+                  <p>Refundable deposit (due today)</p>
                   <p className="font-bold">${productInfo?.price}</p>
                 </div>
                 <h1 className="mt-6 font-bold pb-5 text-xl"> Card details</h1>
