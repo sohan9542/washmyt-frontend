@@ -450,7 +450,7 @@ const RetailerDetails = () => {
                   )}
                   <button
                     type="submit"
-                    className="flex w-full cursor-pointer mt-3 justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-pr hover:bg-new"
+                    className="flex w-full cursor-pointer mt-3 justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-black"
                   >
                     Next
                   </button>
@@ -650,9 +650,9 @@ const PaymentElement = ({
 
       <input
         type="submit"
-        value={`Pay - $500`}
+        value={`Place Order`}
         ref={payBtn}
-        className="flex w-full cursor-pointer mt-3 justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-pr hover:bg-new"
+        className="flex w-full cursor-pointer mt-3 justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-black"
       />
     </form>
   );
