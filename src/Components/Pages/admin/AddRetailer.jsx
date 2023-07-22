@@ -18,8 +18,13 @@ const AddRetailer = () => {
   const [model, setModel] = useState([]);
   const [zipCode, setZipCode] = useState("");
   const [testDrive, setTestDrive] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [images, setImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
   const create = () => {
+    setLoading(true)
     let data = JSON.stringify({
+      images: images,
       dealerName: name,
       street: street,
       address: address,
@@ -43,6 +48,7 @@ const AddRetailer = () => {
     axios
       .request(config)
       .then((response) => {
+        setLoading(false)
         if (response.data?.success) {
           toast.success("Retailer Created Successfully", {
             position: "top-right",
@@ -61,6 +67,7 @@ const AddRetailer = () => {
         }
       })
       .catch((error) => {
+        setLoading(false)
         toast.error("Something Went Wrong Please Try again", {
           position: "top-right",
           autoClose: 3000,
@@ -137,8 +144,30 @@ const AddRetailer = () => {
     setAllProductCopy([...allProductCopy, removedList[0]]);
   };
 
+
+  const createProductImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    setImages([]);
+    setImagesPreview([]);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((old) => [...old, reader.result]);
+          setImages((old) => [...old, reader.result]);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    console.log(files)
+  };
   return (
-    <div className=" grid grid-cols-1 lg:grid-cols-5">
+    <div className=" grid relative grid-cols-1 lg:grid-cols-5">
       <Sidebar />
       <div className="w-full lg:col-span-4 bg-white mt-32 lg:mt-0">
         <h1 className="text-center mt-32 text-2xl text-blk-tx font-bold">
@@ -152,6 +181,26 @@ const AddRetailer = () => {
             }}
             className="w-full lg:w-96"
           >
+             <div
+              id="createProductFormImage"
+              className="mt-4 flex items-center gap-2"
+            >
+              {imagesPreview.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  className="w-20"
+                  alt="Product Preview"
+                />
+              ))}
+            </div>
+            <p className=" mt-3 mb-1">Logo</p>
+            <input
+              required
+              onChange={createProductImagesChange}
+              type="file"
+            />
+
             <p className=" mt-3">Name</p>
             <input
               required
@@ -232,6 +281,34 @@ const AddRetailer = () => {
           </form>
         </div>
       </div>
+      {loading &&  <div
+          className="fixed top-0 flex items-center justify-center left-0 w-full h-screen"
+          style={{ background: "rgba(255,255,255,0.5)" }}
+        >
+          <h1 className="text-3xl font-bold flex items-center gap-3">
+            <svg
+              class="animate-spin -ml-1 mr-3 h-10 w-10 text-black"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            Please Wait...
+          </h1>
+        </div>}
     </div>
   );
 };

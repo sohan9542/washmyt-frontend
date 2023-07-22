@@ -174,7 +174,7 @@ const RetailerSearch = () => {
   };
 
   return (
-    <div className=" mt-5 px-3 lg:px-0 min-h-[900px]">
+    <div className=" mt-5 px-3 lg:px-0 min-h-[850px]">
       {!load ? (
         <div className="px-7  mx-auto">
           <h1 className="text-3xl pb-6 font-medium text-gray-600 ">
@@ -240,7 +240,7 @@ const RetailerSearch = () => {
             <div className="flex items-center mt-7 gap-2">
               <button
                 type="submit"
-                className="px-3 py-3 border flex w-full justify-center items-center gap-2 text-pr hover:bg-pr hover:text-white  border-pr "
+                className="px-3 py-3 border flex w-full justify-center items-center gap-2 text-black hover:bg-black hover:text-white  border-black "
               >
                 <BiSearch className="w-5  h-5  " /> Search
               </button>
@@ -257,13 +257,17 @@ const RetailerSearch = () => {
                         to={"/retailer/" + item?._id}
                         className="bg-white shadow-md hover:text-pr p-5 rounded-md"
                       >
-                        <h1 className="text-xl pt-2 font-bold text-gray-700">
+                      <div className="flex items-center justify-between">
+                      <h1 className="text-xl pt-2 font-bold text-gray-700">
                           {item?.dealerName}
                         </h1>
+                        {item?.images?.length > 0 &&  <img className="w-24 h-9 object-contain" src={item?.images?.[0]?.url} alt="" />}
+                       
+                      </div>
 
                         <p className="text-gray-500 pt-2">{item?.street}</p>
                         <p className="text-gray-500 pt-1">{item?.address}</p>
-                        <button className="px-3 py-3 border  mt-5 w-full text-cener font-bold rounded-md gap-2 text-pr hover:bg-pr hover:text-white  border-pr ">
+                        <button className="px-3 py-3 border  mt-5 w-full text-cener font-bold rounded-md gap-2 text-black hover:bg-black hover:text-white  border-black ">
                           SELECT RETAILER
                         </button>
                       </Link>

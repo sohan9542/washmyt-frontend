@@ -72,7 +72,7 @@ const Retailer = () => {
       });
   };
   return (
-    <div>
+    <div className="relative">
       <div className=" grid grid-cols-1 lg:grid-cols-5">
         <Sidebar />
         <div className=" mt-3 py-3 px-5 rounded-xl lg:col-span-4 bg-white shadow-sm">
@@ -92,6 +92,12 @@ const Retailer = () => {
               <table className="min-w-full ">
                 <thead className="bg-blue-50">
                   <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
+                    >
+                     Logo
+                    </th>
                     <th
                       scope="col"
                       className="px-6 py-2 text-left text-xs font-bold text-gray-500  tracking-wider"
@@ -136,6 +142,9 @@ const Retailer = () => {
                     {allProducts?.map((item, ind) => (
                       <tr>
                         <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
+                       {item?.retailer?.images?.length > 0  && <img className="w-24 h-9" src={item?.retailer?.images?.[0]?.url} alt="" />}  
+                        </td>
+                        <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
                           <p>{item?.retailer?.dealerName}</p>
                         </td>
                         <td className="px-4 py-2 text-gray-600 font-medium whitespace-nowrap">
@@ -179,6 +188,7 @@ const Retailer = () => {
           </div>
         </div>
       </div>
+ 
     </div>
   );
 };

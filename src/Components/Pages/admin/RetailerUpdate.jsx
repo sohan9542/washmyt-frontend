@@ -6,6 +6,7 @@ import { URI } from "../../../App";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
+import {VscClose} from "react-icons/vsc"
 const RetailerUpdate = () => {
   const { id } = useParams();
   const [name, setName] = useState("");
@@ -19,11 +20,13 @@ const RetailerUpdate = () => {
   const [model, setModel] = useState([]);
   const [zipCode, setZipCode] = useState("");
   const [testDrive, setTestDrive] = useState(false)
-
+  const [images, setImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
   const create = () => {
     let data = JSON.stringify({
       dealerName: name,
       street: street,
+      images: images,
       address: address,
       car: carId,
       make: make,
@@ -109,7 +112,9 @@ const RetailerUpdate = () => {
           setName(data?.dealerName);
           setStreet(data?.street);
           setAddress(data?.address);
-setTestDrive(data?.testDrive )
+          setImages(data?.images);
+          setImagesPreview(data?.images);
+          setTestDrive(data?.testDrive)
           data?.car?.map((item) => {
             addSelectedCar(item);
           });
@@ -175,6 +180,25 @@ setTestDrive(data?.testDrive )
     let removedList = allProducts.filter((item) => item?._id === selected?._id);
     setAllProductCopy([...allProductCopy, removedList[0]]);
   };
+  const createProductImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    setImages([]);
+    setImagesPreview([]);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview([...imagesPreview,  reader.result]);
+          setImages([...images, reader.result]);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
 
   return (
     <div className=" grid grid-cols-1 lg:grid-cols-5">
@@ -191,6 +215,45 @@ setTestDrive(data?.testDrive )
             }}
             className="w-full lg:w-96"
           >
+                      <div
+              id="createProductFormImage"
+              className="mt-4 flex items-center gap-2"
+            >
+              {imagesPreview.map((image, index) => (
+               <div className="relative">
+               {image?.url ?  <img
+                  key={index}
+                  src={image?.url}
+                  className="w-20"
+                  alt="Product Preview"
+                />
+                :
+                <img
+                  key={index}
+                  src={image}
+                  className="w-20"
+                  alt="Product Preview"
+                />
+            }
+            <div onClick={()=>{
+              let demImages = images.filter((item, ind)=> ind !== index)
+              setImages([...demImages])
+              setImagesPreview([...demImages])
+             
+            }} className=" absolute -top-1 bg-pr p-1 rounded-full text-white -right-1 z-10">
+<VscClose className="w-3 h-3 cursor-pointer"/>
+            </div>
+               </div>
+              ))}
+            </div>
+
+            <p className=" mt-3 mb-1">Images</p>
+            <input
+            
+              multiple
+              onChange={createProductImagesChange}
+              type="file"
+            />
             <p className=" mt-3">Name</p>
             <input
               required
